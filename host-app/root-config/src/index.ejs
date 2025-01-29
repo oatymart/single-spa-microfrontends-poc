@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Host App for micro-frontends</title>
+
+    <!--
+    This CSP allows any SSL-enabled host, but you should limit these directives further to increase your app's security.
+    Learn more about CSP policies at https://content-security-policy.com/#directive
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: localhost:*; script-src 'unsafe-inline' 'unsafe-eval' https: localhost:*; connect-src https: localhost:* ws://localhost:*; style-src 'unsafe-inline' https:; object-src 'none';">
+
+    <meta name="importmap-type" content="systemjs-importmap" />
+
+    <!-- If you wish to turn off import-map-overrides for specific environments (prod), uncomment the line below -->
+    <!-- More info at https://github.com/single-spa/import-map-overrides/blob/main/docs/configuration.md#domain-list -->
+    <!-- <meta name="import-map-overrides-domains" content="denylist:prod.example.com" /> -->
+
+    <!-- Shared dependencies go into this import map -->
+    <script type="systemjs-importmap">
+    {
+      "imports": {
+        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@6.0.3/lib/es2015/system/single-spa.min.js",
+        "lodash": "/node_modules/lodash-es/lodash.js"
+    }
+    }
+  </script>
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/single-spa@6.0.3/lib/es2015/system/single-spa.min.js" as="script">
+
+    <!-- Add your organization's prod import map URL to this script's src  -->
+    <!-- <script type="injector-importmap" src="/importmap.json"></script> -->
+
+    <% if (isLocal) { %>
+    <script type="systemjs-importmap">
+      {
+        "imports": {
+          "@oat-sa/root-config": "//localhost:9000/oat-sa-root-config.js",
+          "@oat-sa/mfe1": "//localhost:9001/oat-sa-mfe1.js",
+          "@oat-sa/mfe2": "//localhost:9002/oat-sa-mfe2.js"
+        }
+      }
+    </script>
+    <% } else { %>
+      <!-- script src= production importmap -->
+    <% } %>
+
+    <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@4.1.0/dist/import-map-overrides.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@single-spa/import-map-injector@1.1.0/lib/import-map-injector.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/named-exports.min.js"></script>
+</head>
+
+<body>
+    <script>
+        window.importMapInjector.initPromise.then(() => {
+            // The following statement can be System.import() or import() depending if we work with System or ESM modules
+            System.import('@oat-sa/root-config');
+        });
+    </script>
+    <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full>
+</body>
+
+</html>

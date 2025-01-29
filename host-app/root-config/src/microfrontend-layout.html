@@ -1,0 +1,26 @@
+<single-spa-router>
+    <!-- This is the single-spa Layout Definition for your microfrontends. -->
+    <!-- See https://single-spa.js.org/docs/layout-definition/ for more information. -->
+    <main id="host-app">
+        <route default>
+            <h1>Host header</h1>
+            <nav>
+                <p>Host nav</p>
+                <ul>
+                    <li><a href="/">/</a></li>
+                    <li><a href="/mfe1">/mfe1</a></li>
+                    <li><a href="/mfe2">/mfe2</a></li>
+                </ul>
+            </nav>
+            <application name="@oat-sa/mfe1"></application>
+            <application name="@oat-sa/mfe2"></application>
+            <footer>Host footer</footer>
+        </route>
+        <route path="mfe1">
+            <application name="@oat-sa/mfe1"></application>
+        </route>
+        <route path="mfe2">
+            <application name="@oat-sa/mfe2"></application>
+        </route>
+    </main>
+</single-spa-router>
