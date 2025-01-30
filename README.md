@@ -26,7 +26,7 @@ Bring up all apps & services (a script can be made later):
 
 ```sh
 cd host-app/root-config
-npm run dev
+npm run start
 cd ../common/apis
 npm run dev
 cd ../../../packages/mfe1
