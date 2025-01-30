@@ -2,7 +2,7 @@ import svelte from "rollup-plugin-svelte";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import livereload from "rollup-plugin-livereload";
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -19,7 +19,6 @@ export default {
         svelte({
             // enable run-time checks when not in production
             dev: !production,
-
             emitCss: false,
         }),
 
@@ -36,7 +35,7 @@ export default {
 
         // In dev mode, call `npm run start` once
         // the bundle has been generated
-        !production && serve(),
+        // !production && serve(),
 
         // Watch the `dist` directory and refresh the
         // browser on changes when not in production
@@ -59,9 +58,17 @@ function serve() {
             if (!started) {
                 started = true;
 
-                require("child_process").spawn("npm", ["run", "serve", "--", "--dev"], {
-                    stdio: ["ignore", "inherit", "inherit"],
-                    shell: true,
+                // no "type"
+                // require("child_process").spawn("npm", ["run", "serve", "--", "--dev"], {
+                //     stdio: ["ignore", "inherit", "inherit"],
+                //     shell: true,
+                // });
+                // since using "type": "module"
+                import("child_process").then(({ spawn }) => {
+                    spawn("npm", ["run", "serve", "--", "--dev"], {
+                        stdio: ["ignore", "inherit", "inherit"],
+                        shell: true,
+                    });
                 });
             }
         },

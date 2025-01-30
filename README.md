@@ -2,8 +2,9 @@
 
 ## Framework
 
-https://single-spa.js.org/
-https://generator.jspm.io/ - for composing CDN importmaps
+- https://single-spa.js.org/
+- https://github.com/systemjs/systemjs
+- https://generator.jspm.io/ - for composing CDN importmaps
 
 ## Structure
 
@@ -25,13 +26,13 @@ Bring up all apps & services (a script can be made later):
 
 ```sh
 cd host-app/root-config
-npm run start
+npm run dev
 cd ../common/apis
-npm run start
+npm run dev
 cd ../../../packages/mfe1
-npm run start
+npm run dev
 cd ../../packages/mfe2
-npm run start
+npm run dev
 ```
 
 ## Routes
