@@ -1,4 +1,4 @@
-import svelte from "rollup-plugin-svelte";
+// import svelte from "rollup-plugin-svelte";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import livereload from "rollup-plugin-livereload";
@@ -7,22 +7,15 @@ import { terser } from "rollup-plugin-terser";
 const production = !process.env.ROLLUP_WATCH;
 
 export default {
-    input: "src/oat-sa-mfe2.js",
+    input: "src/oat-sa-apis.js",
     output: {
         sourcemap: true,
         format: "system",
         name: null, // ensure anonymous System.register
-        file: "dist/oat-sa-mfe2.js",
+        file: "dist/oat-sa-apis.js",
     },
-    external: ["single-spa", "lodash", "svelte", "@oat-sa/apis"],
+    external: ["single-spa", "lodash", "svelte/store"],
     plugins: [
-        svelte({
-            // enable run-time checks when not in production
-            dev: !production,
-
-            emitCss: false,
-        }),
-
         // If you have external dependencies installed from
         // npm, you'll most likely need these plugins. In
         // some cases you'll need additional configuration -
@@ -59,9 +52,17 @@ function serve() {
             if (!started) {
                 started = true;
 
-                require("child_process").spawn("npm", ["run", "serve", "--", "--dev"], {
-                    stdio: ["ignore", "inherit", "inherit"],
-                    shell: true,
+                // no "type"
+                // require("child_process").spawn("npm", ["run", "serve", "--", "--dev"], {
+                //     stdio: ["ignore", "inherit", "inherit"],
+                //     shell: true,
+                // });
+                // since using "type": "module"
+                import("child_process").then(({ spawn }) => {
+                    spawn("npm", ["run", "serve", "--", "--dev"], {
+                        stdio: ["ignore", "inherit", "inherit"],
+                        shell: true,
+                    });
                 });
             }
         },

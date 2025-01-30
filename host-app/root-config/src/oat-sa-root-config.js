@@ -13,11 +13,6 @@ const applications = constructApplications({
     return System.import(/* webpackIgnore: true */ name);
   },
 });
-// registerApplication({
-//     name: "@oat-sa/mfe1",
-//     app: () => System.import("@oat-sa/mfe1"),
-//     activeWhen: "/",
-// });
 
 const layoutEngine = constructLayoutEngine({ routes, applications });
 

@@ -3,27 +3,32 @@
 ## Framework
 
 https://single-spa.js.org/
+https://generator.jspm.io/ - for composing CDN importmaps
 
 ## Structure
 
 ```
-- host-app/
-  - common/
-    - apis/
-  - root-config/: defines the host app which is served on localhost:9000
-- packages/
-  - mfe1/: serves on localhost:9001
-  - mfe2/: serves on localhost:9002
+host-app/
+  ∟ common/
+    ∟ apis/: support services, served on localhost:9003
+  ∟ root-config/: defines the host app which is served on localhost:9000
+packages/
+  ∟ mfe1/: serves dist on localhost:9001
+  ∟ mfe2/: serves dist on localhost:9002
 ```
 
 ## Usage
 
-Bring up all apps (a script can be made later):
+Install by `npm install` in each of the above locations.
+
+Bring up all apps & services (a script can be made later):
 
 ```sh
 cd host-app/root-config
 npm run start
-cd ../../packages/mfe1
+cd ../common/apis
+npm run start
+cd ../../../packages/mfe1
 npm run start
 cd ../../packages/mfe2
 npm run start
@@ -31,8 +36,9 @@ npm run start
 
 ## Routes
 
-/
-/mfe3
+- http://localhost:9000/
+- http://localhost:9000/mfe1
+- http://localhost:9000/mfe2
 
 ## Tech notes
 
@@ -46,29 +52,32 @@ npm run start
 ## To do
 
 - [x] a route that loads multiple MFEs together
-- [ ] a route that loads a single MFE to take over the whole document
-- [ ] initialise MFEs with props from host config?
-- [ ] load a shared JS module (e.g. a large lib -> lodash)
-- [ ] host app is bundled by Webpack -> want to change to Vite or Rollup
-- [ ] could remove EJS processor
+- [x] a route that loads a single MFE to take over the whole document
+- [x] load a shared JS module (e.g. a large lib -> lodash) (only done from CDN, not local files)
+- [x] host app is bundled by Webpack -> want to change to Vite or Rollup
+- [x] try loading 2 versions of Svelte simultaneously -> 3 & 4 ok; 5 has issues
 - [ ] test loading libs or MFEs bundled as ESM, System, CommonJS
-- [ ] try loading 2 versions of Svelte simultaneously
-- [ ] install LDS here
-- [ ] MFEs to read & write common data to sessionStorage?
-- [ ] communication between MFEs and host app via event bus
-- [ ] host app to expose some API, store or state
-- [ ] host app service to fetch BE data (auth server?)
-- [ ] host app to expose a reactive store?
-- [ ] add config (.env) to define which MFEs will register and their URLs/ports (System.addImportMap)
+- [ ] could replace EJS processor?
+- [ ] add config (.env) to define which MFEs will register and their URLs/ports (System.addImportMap?)
+- [ ] initialise MFEs with props from host config or own configs (install dotenv?)
 - [ ] stop inlining the importmap; point to a file, depending on config
+- [ ] install LDS here (does its JS format matter?)
+- [x] host app to expose a reactive store?
+- [ ] host app to expose some API, store or state
+- [ ] host app service to fetch BE data (auth server? httpbin?)
+- [ ] communication between MFEs and host app via event bus
+- [ ] MFEs to read & write common data to sessionStorage?
 - [ ] remove single-spa-layout engine?
+- [ ] try [self-hosted-shared-dependencies](https://github.com/single-spa/self-hosted-shared-dependencies)
+- [ ] avoid having sets of dependencies in both root-config and common parts
+- [ ] bundle/watch/serve all parts from a single process - for development and production
 
 ## Extend
 
 Add a new MFE:
 
 ```sh
-npm create-single-spa
+npx create-single-spa
 ```
 
 Choose application type, packages/mfe* folder, npm, org name `oat-sa`.

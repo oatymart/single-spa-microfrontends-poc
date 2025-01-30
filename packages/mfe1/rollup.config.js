@@ -14,6 +14,7 @@ export default {
         name: null, // ensure anonymous System.register
         file: "dist/oat-sa-mfe1.js",
     },
+    external: ["single-spa", "lodash", "svelte", "@oat-sa/apis"],
     plugins: [
         svelte({
             // enable run-time checks when not in production

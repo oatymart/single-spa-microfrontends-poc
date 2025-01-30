@@ -24,10 +24,14 @@
     {
       "imports": {
         "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@6.0.3/lib/es2015/system/single-spa.min.js",
-        "lodash": "/node_modules/lodash-es/lodash.js"
+        "lodash": "https://ga.system.jspm.io/npm:lodash@4.17.21/lodash.js",
+        "svelte": "https://ga.system.jspm.io/npm:svelte@4.2.19/src/runtime/index.js",
+        "svelte/store": "https://ga.system.jspm.io/npm:svelte@4.2.19/src/runtime/store/index.js"
     }
     }
-  </script>
+    </script>
+    <!-- svelte@4.2.19 is an ESM, can't be used from CDN with SystemJS -->
+    <!-- "svelte": "https://cdn.jsdelivr.net/npm/svelte@3.59.2/index.js" -->
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/single-spa@6.0.3/lib/es2015/system/single-spa.min.js" as="script">
 
     <!-- Add your organization's prod import map URL to this script's src  -->
@@ -39,7 +43,8 @@
         "imports": {
           "@oat-sa/root-config": "//localhost:9000/oat-sa-root-config.js",
           "@oat-sa/mfe1": "//localhost:9001/oat-sa-mfe1.js",
-          "@oat-sa/mfe2": "//localhost:9002/oat-sa-mfe2.js"
+          "@oat-sa/mfe2": "//localhost:9002/oat-sa-mfe2.js",
+          "@oat-sa/apis": "//localhost:9003/oat-sa-apis.js"
         }
       }
     </script>
@@ -55,6 +60,8 @@
 </head>
 
 <body>
+    <!-- single-spa template injection happens above here -->
+    <p>isLocal: <%= isLocal ? 'yes' : 'no' %></p>
     <script>
         window.importMapInjector.initPromise.then(() => {
             // The following statement can be System.import() or import() depending if we work with System or ESM modules

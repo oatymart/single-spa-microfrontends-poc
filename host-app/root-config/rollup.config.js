@@ -3,24 +3,33 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
+import ejs from 'rollup-plugin-ejs';
 
 const production = !process.env.ROLLUP_WATCH;
 
 export default {
-    input: "src/oat-sa-mfe2.js",
+    input: "src/oat-sa-root-config.js",
     output: {
         sourcemap: true,
         format: "system",
         name: null, // ensure anonymous System.register
-        file: "dist/oat-sa-mfe2.js",
+        file: "dist/oat-sa-root-config.js",
     },
-    external: ["single-spa", "lodash", "svelte", "@oat-sa/apis"],
+    external: ["single-spa"],
     plugins: [
         svelte({
             // enable run-time checks when not in production
             dev: !production,
 
             emitCss: false,
+        }),
+        ejs({
+            include: 'src/index.ejs',
+            render: {
+                data: {
+                    isLocal: !production
+                },
+            },
         }),
 
         // If you have external dependencies installed from
