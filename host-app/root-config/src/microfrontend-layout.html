@@ -2,25 +2,29 @@
     <!-- This is the single-spa Layout Definition for your microfrontends. -->
     <!-- See https://single-spa.js.org/docs/layout-definition/ for more information. -->
     <main id="host-app">
-        <route default>
+        <!-- this is the root route, a composition of apps -->
+        <route path="/" exact>
             <h1>Host header</h1>
-            <nav>
-                <p>Host nav</p>
-                <ul>
-                    <li><a href="/">/</a></li>
-                    <li><a href="/mfe1">/mfe1</a></li>
-                    <li><a href="/mfe2">/mfe2</a></li>
-                </ul>
-            </nav>
+            <application name="@oat-sa/common-menu"></application>
             <application name="@oat-sa/mfe1"></application>
             <application name="@oat-sa/mfe2"></application>
             <footer>Host footer</footer>
         </route>
+        <!-- these are the routes for permanently available apps which will take the whole page -->
         <route path="mfe1">
+            <application name="@oat-sa/common-menu"></application>
             <application name="@oat-sa/mfe1"></application>
         </route>
         <route path="mfe2">
+            <application name="@oat-sa/common-menu"></application>
             <application name="@oat-sa/mfe2"></application>
         </route>
+        <!-- this is the fallback route (404) -->
+        <route default>
+            <h1>No matching route</h1>
+        </route>
+        <!-- other routes and apps can register themselves without being defined here -->
+        <!-- do not remove the next element -->
+        <extra-routes />
     </main>
 </single-spa-router>

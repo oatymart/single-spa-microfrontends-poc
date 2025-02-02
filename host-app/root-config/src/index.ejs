@@ -20,37 +20,44 @@
     <!-- <meta name="import-map-overrides-domains" content="denylist:prod.example.com" /> -->
 
     <!-- Shared dependencies go into this import map -->
+    <!-- For now, JSPM CDN is used as this provided SystemJS-format modules -->
+    <!-- But it could be replaced by an importmap generated from and pointing to node_modules files -->
     <script type="systemjs-importmap">
     {
       "imports": {
-        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@6.0.3/lib/es2015/system/single-spa.min.js",
+        "single-spa": "https://ga.system.jspm.io/npm:single-spa@6.0.3/lib/es2015/esm/single-spa.min.js",
         "lodash": "https://ga.system.jspm.io/npm:lodash@4.17.21/lodash.js",
-        "svelte": "https://ga.system.jspm.io/npm:svelte@4.2.19/src/runtime/index.js",
-        "svelte/store": "https://ga.system.jspm.io/npm:svelte@4.2.19/src/runtime/store/index.js"
-    }
+        "svelte": "https://ga.system.jspm.io/npm:svelte@3.59.2/index.mjs"
+      }
     }
     </script>
-    <!-- svelte@4.2.19 is an ESM, can't be used from CDN with SystemJS -->
-    <!-- "svelte": "https://cdn.jsdelivr.net/npm/svelte@3.59.2/index.js" -->
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/single-spa@6.0.3/lib/es2015/system/single-spa.min.js" as="script">
-
-    <!-- Add your organization's prod import map URL to this script's src  -->
-    <!-- <script type="injector-importmap" src="/importmap.json"></script> -->
 
     <% if (isLocal) { %>
     <script type="systemjs-importmap">
       {
         "imports": {
           "@oat-sa/root-config": "//localhost:9000/oat-sa-root-config.js",
+          "@oat-sa/common": "//localhost:9003/oat-sa-common.js",
+          "@oat-sa/common-auth": "//localhost:9003/oat-sa-common-auth.js",
+          "@oat-sa/common-menu": "//localhost:9003/oat-sa-common-menu.js",
           "@oat-sa/mfe1": "//localhost:9001/oat-sa-mfe1.js",
           "@oat-sa/mfe2": "//localhost:9002/oat-sa-mfe2.js",
-          "@oat-sa/apis": "//localhost:9003/oat-sa-apis.js"
+          "@oat-sa/mfe3": "//localhost:9004/oat-sa-mfe3.js"
         }
       }
     </script>
     <% } else { %>
-      <!-- script src= production importmap -->
+      <!-- script type="systemjs-importmap" src= production importmap -->
     <% } %>
+
+    <script>
+        // For testing:
+        // System.import("lodash").then(m => console.log(m));
+        // System.import("single-spa").then(m => console.log(m));
+        // System.import("single-spa-svelte").then(m => console.log(m));
+        // System.import("svelte").then(m => console.log(m));
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@4.1.0/dist/import-map-overrides.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@single-spa/import-map-injector@1.1.0/lib/import-map-injector.js"></script>
@@ -61,11 +68,14 @@
 
 <body>
     <!-- single-spa template injection happens above here -->
-    <p>isLocal: <%= isLocal ? 'yes' : 'no' %></p>
     <script>
-        window.importMapInjector.initPromise.then(() => {
+        window.importMapInjector.initPromise.then(async() => {
             // The following statement can be System.import() or import() depending if we work with System or ESM modules
-            System.import('@oat-sa/root-config');
+            await System.import('@oat-sa/root-config');
+            // Start additional MFEs (registers menu items):
+            await System.import('@oat-sa/mfe1');
+            await System.import('@oat-sa/mfe2');
+            await System.import('@oat-sa/mfe3');
         });
     </script>
     <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full>

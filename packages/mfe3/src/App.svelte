@@ -1,9 +1,7 @@
 <script>
-    import { countStore, incrementCount } from '@oat-sa/common';
     import { getAccessToken } from '@oat-sa/common-auth';
     import _ from 'lodash';
     import { tick } from 'svelte';
-    // import { VERSION } from 'svelte/compiler';
 
     export let name;
 
@@ -22,14 +20,11 @@
     section {
         font-size: 1.5rem;
         min-height: 6rem;
-        background: palegoldenrod;
+        background: salmon;
     }
 </style>
 
 <section>
     <h2>{name} is mounted!</h2>
     <p>authenticated: {authenticated}</p>
-    <!-- <p>Svelte: {VERSION}</p> -->
-    <p>$countStore: {$countStore}</p>
-    <button on:click={incrementCount}>Increment count</button>
 </section>

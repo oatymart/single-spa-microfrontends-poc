@@ -1,21 +1,36 @@
-// import svelte from "rollup-plugin-svelte";
+import svelte from "rollup-plugin-svelte";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
+import serve from "rollup-plugin-serve";
 import livereload from "rollup-plugin-livereload";
 import terser from "@rollup/plugin-terser";
+import { visualizer } from 'rollup-plugin-visualizer';
 
 const production = !process.env.ROLLUP_WATCH;
 
-export default {
-    input: "src/oat-sa-apis.js",
+export default [{
+    // This is the bundler for several re-usable components in the "common" namespace
+    input: [
+        "src/oat-sa-common.js",
+        "src/auth/oat-sa-common-auth.js",
+        "src/menu/oat-sa-common-menu.js"
+    ],
     output: {
         sourcemap: true,
         format: "system",
         name: null, // ensure anonymous System.register
-        file: "dist/oat-sa-apis.js",
+        dir: "dist",
     },
-    external: ["single-spa", "lodash", "svelte/store"],
+    // externals must be resolvable through the root-config's importmap
+    external: ["single-spa", "lodash"],
     plugins: [
+        svelte({
+            compilerOptions: {
+                dev: !production,
+            },
+            emitCss: false,
+        }),
+
         // If you have external dependencies installed from
         // npm, you'll most likely need these plugins. In
         // some cases you'll need additional configuration -
@@ -29,7 +44,13 @@ export default {
 
         // In dev mode, call `npm run start` once
         // the bundle has been generated
-        // !production && serve(),
+        !production && serve({
+            contentBase: ['dist'],
+            port: 9003,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+            },
+        }),
 
         // Watch the `dist` directory and refresh the
         // browser on changes when not in production
@@ -38,33 +59,14 @@ export default {
         // If we're building for production (npm run build
         // instead of npm run dev), minify
         production && terser(),
+
+        // visualizer({
+        //     open: true,
+        //     gzipSize: true,
+        //     filename: 'stats.html'
+        // })
     ],
     watch: {
         clearScreen: false,
     },
-};
-
-function serve() {
-    let started = false;
-
-    return {
-        writeBundle() {
-            if (!started) {
-                started = true;
-
-                // no "type"
-                // require("child_process").spawn("npm", ["run", "serve", "--", "--dev"], {
-                //     stdio: ["ignore", "inherit", "inherit"],
-                //     shell: true,
-                // });
-                // since using "type": "module"
-                import("child_process").then(({ spawn }) => {
-                    spawn("npm", ["run", "serve", "--", "--dev"], {
-                        stdio: ["ignore", "inherit", "inherit"],
-                        shell: true,
-                    });
-                });
-            }
-        },
-    };
-}
+}];

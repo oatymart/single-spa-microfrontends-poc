@@ -9,12 +9,12 @@ import { visualizer } from '../../host-app/common/node_modules/rollup-plugin-vis
 const production = !process.env.ROLLUP_WATCH;
 
 export default {
-    input: "src/oat-sa-mfe2.js",
+    input: "src/oat-sa-mfe3.js",
     output: {
         sourcemap: true,
         format: "system",
         name: null, // ensure anonymous System.register
-        file: "dist/oat-sa-mfe2.js",
+        file: "dist/oat-sa-mfe3.js",
     },
     external: ["single-spa", "lodash", "@oat-sa/common", "@oat-sa/common-auth", "@oat-sa/common-menu"],
     plugins: [
@@ -40,7 +40,7 @@ export default {
         // the bundle has been generated
         !production && serve({
             contentBase: ['dist'],
-            port: 9002,
+            port: 9004,
             headers: {
                 'Access-Control-Allow-Origin': '*',
             },
@@ -64,28 +64,3 @@ export default {
         clearScreen: false,
     },
 };
-
-// function serve() {
-//     let started = false;
-
-//     return {
-//         writeBundle() {
-//             if (!started) {
-//                 started = true;
-
-//                 // no "type"
-//                 // require("child_process").spawn("npm", ["run", "serve", "--", "--dev"], {
-//                 //     stdio: ["ignore", "inherit", "inherit"],
-//                 //     shell: true,
-//                 // });
-//                 // since using "type": "module"
-//                 import("child_process").then(({ spawn }) => {
-//                     spawn("npm", ["run", "serve", "--", "--dev"], {
-//                         stdio: ["ignore", "inherit", "inherit"],
-//                         shell: true,
-//                     });
-//                 });
-//             }
-//         },
-//     };
-// }

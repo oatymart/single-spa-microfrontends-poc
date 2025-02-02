@@ -13,14 +13,14 @@ export default {
         sourcemap: true,
         format: "system",
         name: null, // ensure anonymous System.register
-        file: "dist/oat-sa-root-config.js",
+        dir: "dist",
     },
     external: ["single-spa"],
     plugins: [
         svelte({
-            // enable run-time checks when not in production
-            dev: !production,
-
+            compilerOptions: {
+                dev: !production,
+            },
             emitCss: false,
         }),
         ejs({

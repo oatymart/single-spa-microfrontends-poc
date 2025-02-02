@@ -1,8 +1,10 @@
 import svelte from "rollup-plugin-svelte";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
+import serve from "rollup-plugin-serve";
 import livereload from "rollup-plugin-livereload";
 import terser from "@rollup/plugin-terser";
+import { visualizer } from '../../host-app/common/node_modules/rollup-plugin-visualizer/dist/plugin/index.js';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -14,11 +16,12 @@ export default {
         name: null, // ensure anonymous System.register
         file: "dist/oat-sa-mfe1.js",
     },
-    external: ["single-spa", "lodash", "svelte", "@oat-sa/apis"],
+    external: ["single-spa", "lodash", "svelte", "@oat-sa/common", "@oat-sa/common-auth", "@oat-sa/common-menu"],
     plugins: [
         svelte({
-            // enable run-time checks when not in production
-            dev: !production,
+            compilerOptions: {
+                dev: !production,
+            },
             emitCss: false,
         }),
 
@@ -35,7 +38,13 @@ export default {
 
         // In dev mode, call `npm run start` once
         // the bundle has been generated
-        // !production && serve(),
+        !production && serve({
+            contentBase: ['dist'],
+            port: 9001,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+            },
+        }),
 
         // Watch the `dist` directory and refresh the
         // browser on changes when not in production
@@ -44,33 +53,39 @@ export default {
         // If we're building for production (npm run build
         // instead of npm run dev), minify
         production && terser(),
+
+        // visualizer({
+        //     open: true,
+        //     gzipSize: true,
+        //     filename: 'stats.html'
+        // })
     ],
     watch: {
         clearScreen: false,
     },
 };
 
-function serve() {
-    let started = false;
+// function serve() {
+//     let started = false;
 
-    return {
-        writeBundle() {
-            if (!started) {
-                started = true;
+//     return {
+//         writeBundle() {
+//             if (!started) {
+//                 started = true;
 
-                // no "type"
-                // require("child_process").spawn("npm", ["run", "serve", "--", "--dev"], {
-                //     stdio: ["ignore", "inherit", "inherit"],
-                //     shell: true,
-                // });
-                // since using "type": "module"
-                import("child_process").then(({ spawn }) => {
-                    spawn("npm", ["run", "serve", "--", "--dev"], {
-                        stdio: ["ignore", "inherit", "inherit"],
-                        shell: true,
-                    });
-                });
-            }
-        },
-    };
-}
+//                 // no "type"
+//                 // require("child_process").spawn("npm", ["run", "serve", "--", "--dev"], {
+//                 //     stdio: ["ignore", "inherit", "inherit"],
+//                 //     shell: true,
+//                 // });
+//                 // since using "type": "module"
+//                 import("child_process").then(({ spawn }) => {
+//                     spawn("npm", ["run", "serve", "--", "--dev"], {
+//                         stdio: ["ignore", "inherit", "inherit"],
+//                         shell: true,
+//                     });
+//                 });
+//             }
+//         },
+//     };
+// }

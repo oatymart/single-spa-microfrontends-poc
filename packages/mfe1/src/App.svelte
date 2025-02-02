@@ -1,16 +1,21 @@
 <script>
-    import { publicApiFunction, countStore, getCount, incrementCount } from '@oat-sa/apis';
-    import { tick } from 'svelte';
+    import { publicApiFunction, countStore, incrementCount } from '@oat-sa/common';
+    import { getAccessToken } from '@oat-sa/common-auth';
     import _ from 'lodash';
+    import { tick } from 'svelte';
+    // import { VERSION } from 'svelte/compiler';
 
     export let name;
 
-    let countRef = {};
-    $: count = getCount(countRef);
+    let authenticated = false;
 
-    tick().then(() => {
+    tick().then(async() => {
         publicApiFunction();
         _.pick({ a: 1, b: 2 }, 'a');
+
+        await getAccessToken().then(accessToken => {
+            authenticated = !!accessToken;
+        });
     });
 </script>
 
@@ -24,7 +29,8 @@
 
 <section>
     <h2>{name} is mounted!</h2>
-    <p>count: {count}</p>
+    <p>authenticated: {authenticated}</p>
+    <!-- <p>Svelte: {VERSION}</p> -->
     <p>$countStore: {$countStore}</p>
-    <button on:click={() => { countRef = {}; incrementCount(); }}>Increment count</button>
+    <button on:click={incrementCount}>Increment count</button>
 </section>
