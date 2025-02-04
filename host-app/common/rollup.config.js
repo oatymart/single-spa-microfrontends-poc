@@ -13,12 +13,13 @@ export default [{
     input: [
         "src/oat-sa-common.js",
         "src/auth/oat-sa-common-auth.js",
+        "src/login/oat-sa-common-login.js",
         "src/menu/oat-sa-common-menu.js"
     ],
     output: {
         sourcemap: true,
-        format: "system",
-        name: null, // ensure anonymous System.register
+        format: "esm",
+        // name: null, // ensure anonymous System.register
         dir: "dist",
     },
     // externals must be resolvable through the root-config's importmap
@@ -58,7 +59,7 @@ export default [{
 
         // If we're building for production (npm run build
         // instead of npm run dev), minify
-        production && terser(),
+        // production && terser(),
 
         // visualizer({
         //     open: true,

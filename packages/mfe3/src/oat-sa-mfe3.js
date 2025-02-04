@@ -1,7 +1,6 @@
-import { registerApplication } from "single-spa";
 import singleSpaSvelte from "single-spa-svelte";
 import App from "./App.svelte";
-import { registerMenuItem } from '@oat-sa/common-menu';
+import { getIsLoggedIn } from '@oat-sa/common-auth';
 
 const name = 'oat-sa-mfe3';
 const route = '/mfe3';
@@ -27,6 +26,11 @@ const svelteLifecycles = singleSpaSvelte({
 });
 
 export function mount(...args) {
+    // If we are not logged in, hard-redirect to /login, adding the query param
+    if (!getIsLoggedIn()) {
+        window.location.href = `/login?redirect=${window.location.pathname}`;
+        return;
+    }
     return svelteLifecycles.mount(...args);
 }
 
@@ -37,18 +41,3 @@ export function unmount(...args) {
 export function bootstrap(...args) {
     return svelteLifecycles.bootstrap(...args);
 }
-
-registerMenuItem({
-    key: name,
-    label: 'MFE3',
-    href: route,
-    order: 3
-});
-
-// Here is where MFE3 registers itself with single-spa
-// registerApplication({
-//     name,
-//     app: { bootstrap, mount, unmount },
-//     activeWhen: location => location.pathname.startsWith(route), // can do more complex routing here
-//     customProps: {},
-// });

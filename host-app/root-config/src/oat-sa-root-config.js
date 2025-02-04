@@ -4,23 +4,32 @@ import {
     constructRoutes,
     constructLayoutEngine,
 } from "single-spa-layout";
-import microfrontendLayout from "./microfrontend-layout.html";
+import microfrontendLayout from "./microfrontend-layout.html?raw"; // suffix for Vite import
 import { buildAppRouting } from './dynamicLayout.js';
-import extraRoutes from '../extraRoutes.json';
+import config from '../app-config.json';
+console.log('config', config);
 
-// const modules = process.env.MODULES.split(","); // [mfe1, mfe2]
+const layoutData = {
+    props: {
+        config: config || {}
+    },
+    // loaders: {}
+};
 
-const routes = constructRoutes(microfrontendLayout.replace('<extra-routes />', buildAppRouting(extraRoutes)));
+const routes = constructRoutes(
+    microfrontendLayout.replace('<extra-routes />', buildAppRouting(config.extraRoutes)),
+    layoutData
+);
 
 const applications = constructApplications({
     routes,
     loadApp({ name }) {
-        return System.import(/* webpackIgnore: true */ name);
+        return import(/* @vite-ignore */ name);
     },
 });
 
 const layoutEngine = constructLayoutEngine({ routes, applications });
 
-applications.forEach(registerApplication); // move this to each of the mfes?
+applications.forEach(registerApplication);
 layoutEngine.activate();
 start();

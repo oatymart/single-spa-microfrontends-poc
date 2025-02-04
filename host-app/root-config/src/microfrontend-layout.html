@@ -5,26 +5,29 @@
         <!-- this is the root route, a composition of apps -->
         <route path="/" exact>
             <h1>Host header</h1>
-            <application name="@oat-sa/common-menu"></application>
-            <application name="@oat-sa/mfe1"></application>
-            <application name="@oat-sa/mfe2"></application>
+            <application name="@oat-sa/common-menu" props="config"></application>
+            <application name="@oat-sa/mfe1" props="config"></application>
+            <application name="@oat-sa/mfe2" props="config"></application>
             <footer>Host footer</footer>
         </route>
         <!-- these are the routes for permanently available apps which will take the whole page -->
+        <route path="login">
+            <application name="@oat-sa/common-login"></application>
+        </route>
         <route path="mfe1">
-            <application name="@oat-sa/common-menu"></application>
-            <application name="@oat-sa/mfe1"></application>
+            <application name="@oat-sa/common-menu" props="config"></application>
+            <application name="@oat-sa/mfe1" props="config"></application>
         </route>
         <route path="mfe2">
-            <application name="@oat-sa/common-menu"></application>
-            <application name="@oat-sa/mfe2"></application>
+            <application name="@oat-sa/common-menu" props="config"></application>
+            <application name="@oat-sa/mfe2" props="config"></application>
         </route>
         <!-- this is the fallback route (404) -->
         <route default>
             <h1>No matching route</h1>
         </route>
         <!-- other routes and apps can register themselves without being defined here -->
-        <!-- do not remove the next element -->
+        <!-- do not remove the next element! -->
         <extra-routes />
     </main>
 </single-spa-router>

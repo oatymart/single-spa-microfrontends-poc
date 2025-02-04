@@ -24,9 +24,10 @@ export function bootstrap(...args) {
     return svelteLifecycles.bootstrap(...args);
 }
 
-registerMenuItem({
-    key: name,
-    label: 'MFE1',
-    href: '/mfe1',
-    order: 1
-});
+// bad place for this:
+// registerMenuItem({
+//     key: name,
+//     label: 'MFE1',
+//     href: '/mfe1',
+//     order: 1
+// });

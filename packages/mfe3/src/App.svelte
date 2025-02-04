@@ -1,18 +1,18 @@
 <script>
-    import { getAccessToken } from '@oat-sa/common-auth';
+    import { getAccessToken, getIsLoggedIn } from '@oat-sa/common-auth';
     import _ from 'lodash';
     import { tick } from 'svelte';
 
     export let name;
 
-    let authenticated = false;
+    // let authenticated = false;
 
     tick().then(async () => {
         _.omit({ a: 1, b: 2 }, 'a');
 
-        await getAccessToken().then(accessToken => {
-            authenticated = !!accessToken;
-        });
+        // await getAccessToken().then(accessToken => {
+        //     authenticated = !!accessToken;
+        // });
     });
 </script>
 
@@ -24,7 +24,14 @@
     }
 </style>
 
+
 <section>
     <h2>{name} is mounted!</h2>
-    <p>authenticated: {authenticated}</p>
+    <p>You should have logged in if you can see this app.</p>
+    <p>authenticated: {getIsLoggedIn()}</p>
+    <nav>
+        <a href="/mfe3">no sub-route</a> |
+        <a href="/mfe3/foo">sub-route foo</a> |
+        <a href="/mfe3/bar">sub-route bar</a>
+    </nav>
 </section>

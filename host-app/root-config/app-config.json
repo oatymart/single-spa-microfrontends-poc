@@ -1,0 +1,33 @@
+{
+  "extraRoutes": {
+    "@oat-sa/mfe3": {
+      "name": "mfe3",
+      "routes": [
+        "mfe3"
+      ],
+      "uri": "http://localhost:9004/oat-sa-mfe3.js"
+    }
+  },
+  "menu": {
+    "items": [
+      {
+        "key": "mfe1",
+        "label": "MFE1 (configured)",
+        "href": "/mfe1",
+        "order": 1
+      },
+      {
+        "key": "mfe2",
+        "label": "MFE2 (configured)",
+        "href": "/mfe2",
+        "order": 2
+      },
+      {
+        "key": "mfe3",
+        "label": "MFE3 (configured)",
+        "href": "/mfe3",
+        "order": 3
+      }
+    ]
+  }
+}

@@ -1,20 +1,19 @@
 <script>
     import { countStore, incrementCount } from '@oat-sa/common';
-    import { getAccessToken } from '@oat-sa/common-auth';
+    import { getAccessToken, getIsLoggedIn } from '@oat-sa/common-auth';
     import _ from 'lodash';
     import { tick } from 'svelte';
-    // import { VERSION } from 'svelte/compiler';
 
     export let name;
 
-    let authenticated = false;
+    // let authenticated = false;
 
     tick().then(async () => {
         _.omit({ a: 1, b: 2 }, 'a');
 
-        await getAccessToken().then(accessToken => {
-            authenticated = !!accessToken;
-        });
+        // await getAccessToken().then(accessToken => {
+        //     authenticated = !!accessToken;
+        // });
     });
 </script>
 
@@ -28,8 +27,8 @@
 
 <section>
     <h2>{name} is mounted!</h2>
-    <p>authenticated: {authenticated}</p>
-    <!-- <p>Svelte: {VERSION}</p> -->
+    <p>You should have logged in if you can see this app.</p>
+    <p>authenticated: {getIsLoggedIn()}</p>
     <p>$countStore: {$countStore}</p>
     <button on:click={incrementCount}>Increment count</button>
 </section>

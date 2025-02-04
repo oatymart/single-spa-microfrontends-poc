@@ -1,5 +1,6 @@
 import singleSpaSvelte from "single-spa-svelte";
 import App from "./App.svelte";
+import { getIsLoggedIn } from '@oat-sa/common-auth';
 import { registerMenuItem } from '@oat-sa/common-menu';
 
 const name = 'oat-sa-mfe2';
@@ -13,6 +14,11 @@ const svelteLifecycles = singleSpaSvelte({
 });
 
 export function mount(...args) {
+    // If we are not logged in, hard-redirect to /login, adding the query param
+    if (!getIsLoggedIn()) {
+        window.location.href = `/login?redirect=${window.location.pathname}`;
+        return;
+    }
     return svelteLifecycles.mount(...args);
 }
 
@@ -24,9 +30,10 @@ export function bootstrap(...args) {
     return svelteLifecycles.bootstrap(...args);
 }
 
-registerMenuItem({
-    key: name,
-    label: 'MFE2',
-    href: '/mfe2',
-    order: 2
-});
+// bad place for this:
+// registerMenuItem({
+//     key: name,
+//     label: 'MFE2',
+//     href: '/mfe2',
+//     order: 2
+// });

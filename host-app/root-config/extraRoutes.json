@@ -1,9 +1,0 @@
-{
-  "@oat-sa/mfe3": {
-    "name": "mfe3",
-    "routes": [
-      "mfe3"
-    ],
-    "uri": "http://localhost:9004/oat-sa-mfe3.js"
-  }
-}

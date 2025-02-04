@@ -12,11 +12,10 @@ export default {
     input: "src/oat-sa-mfe1.js",
     output: {
         sourcemap: true,
-        format: "system",
-        name: null, // ensure anonymous System.register
+        format: "esm",
         file: "dist/oat-sa-mfe1.js",
     },
-    external: ["single-spa", "lodash", "svelte", "@oat-sa/common", "@oat-sa/common-auth", "@oat-sa/common-menu"],
+    external: ["single-spa", "lodash", "svelte", "@oat-sa/common", "@oat-sa/common-auth", "@oat-sa/common-login", "@oat-sa/common-menu"],
     plugins: [
         svelte({
             compilerOptions: {

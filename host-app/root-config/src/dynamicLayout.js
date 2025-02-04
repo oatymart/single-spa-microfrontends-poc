@@ -31,7 +31,6 @@ const getOrCreateRoute = (parent, attribute) => {
  */
 export const buildAppRouting = apps => {
     const keys = Object.keys(apps);
-    console.log('keys', keys);
     const xml = document.createElement('temp');
     xml.setAttribute('id', 'content-routes');
 
@@ -52,7 +51,7 @@ export const buildAppRouting = apps => {
             });
         });
     });
-    console.log('xml', xml);
+    // console.log('xml', xml);
 
     Array.from(xml.getElementsByTagName('route'))
         .filter(route => route.children.length === 0)
