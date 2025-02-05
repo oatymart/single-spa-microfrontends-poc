@@ -2,8 +2,7 @@
   "name": "@oat-sa/common",
   "type": "module",
   "scripts": {
-    "dev": "concurrently npm:start npm:serve",
-    "start": "rollup -c -w",
+    "dev": "rollup -c -w",
     "serve": "sirv dist -p 9003 -c",
     "build": "concurrently npm:build:*",
     "build:rollup": "rollup -c",

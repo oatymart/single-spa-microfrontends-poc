@@ -4,12 +4,12 @@
   "scripts": {
     "dev": "vite --port 9000",
     "build": "vite build",
-    "start": "webpack serve --port 9000 --env isLocal",
     "lint": "eslint src --ext js",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
-    "_build": "concurrently npm:build:*",
-    "build:webpack": "webpack --mode=production"
+    "not-used-webpack-dev": "webpack serve --port 9000 --env isLocal",
+    "not-used-webpack-build": "concurrently npm:not-used-build:*",
+    "not-used-build:webpack": "webpack --mode=production"
   },
   "devDependencies": {
     "@babel/core": "^7.23.3",

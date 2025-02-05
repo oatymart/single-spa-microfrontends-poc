@@ -2,8 +2,7 @@
   "name": "@oat-sa/mfe3",
   "type": "module",
   "scripts": {
-    "dev": "concurrently npm:start npm:serve",
-    "start": "rollup -c -w",
+    "dev": "rollup -c -w",
     "serve": "sirv dist -p 9004 -c",
     "build": "concurrently npm:build:*",
     "build:rollup": "rollup -c",
