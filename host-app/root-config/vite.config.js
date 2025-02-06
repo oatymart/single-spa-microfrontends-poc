@@ -27,7 +27,7 @@ export default defineConfig({
                 dev: ['src/importMap.dev.json', 'src/importMap.shared.json'], // for vite dev
                 build: ['src/importMap.prod.json', 'src/importMap.shared.json'], // for vite build
             },
-            imo: '4.2.0', // from jsdelivr
+            imo: '5.1.1', // from jsdelivr
             imoUi: 'full'
         })
         // externalize({ externals: externalDependencies })

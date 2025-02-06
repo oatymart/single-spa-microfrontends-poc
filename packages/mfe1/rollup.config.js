@@ -15,7 +15,7 @@ export default {
         format: "esm",
         file: "dist/oat-sa-mfe1.js",
     },
-    external: ["single-spa", "lodash", "svelte", "@oat-sa/common", "@oat-sa/common-auth", "@oat-sa/common-login", "@oat-sa/common-menu"],
+    external: ["single-spa", "lodash", "@oat-sa/common", "@oat-sa/common-auth", "@oat-sa/common-login", "@oat-sa/common-menu"],
     plugins: [
         svelte({
             compilerOptions: {

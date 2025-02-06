@@ -1,19 +1,13 @@
 <script>
     import { countStore, incrementCount } from '@oat-sa/common';
-    import { getAccessToken, getIsLoggedIn } from '@oat-sa/common-auth';
+    import { getIsLoggedIn } from '@oat-sa/common-auth';
     import _ from 'lodash';
     import { tick } from 'svelte';
 
     export let name;
 
-    // let authenticated = false;
-
     tick().then(async () => {
         _.omit({ a: 1, b: 2 }, 'a');
-
-        // await getAccessToken().then(accessToken => {
-        //     authenticated = !!accessToken;
-        // });
     });
 </script>
 
@@ -22,6 +16,10 @@
         font-size: 1.5rem;
         min-height: 6rem;
         background: palegoldenrod;
+        padding: 8px;
+        & p {
+            margin-block: 0.5rem;
+        }
     }
 </style>
 

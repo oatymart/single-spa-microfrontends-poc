@@ -14,7 +14,9 @@ export default [{
         "src/oat-sa-common.js",
         "src/auth/oat-sa-common-auth.js",
         "src/login/oat-sa-common-login.js",
-        "src/menu/oat-sa-common-menu.js"
+        "src/menu/oat-sa-common-menu.js",
+        "src/components/oat-sa-common-components.js",
+        "src/components/SimpleComponent.svelte"
     ],
     output: {
         sourcemap: true,

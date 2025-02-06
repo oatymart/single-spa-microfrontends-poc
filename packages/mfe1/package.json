@@ -17,7 +17,7 @@
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/svelte": "^3.0.3",
+    "@testing-library/svelte": "^4.0.0",
     "babel-jest": "^27.5.1",
     "concurrently": "^6.2.1",
     "jest": "^27.5.1",
