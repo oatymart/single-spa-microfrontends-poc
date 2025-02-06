@@ -4,27 +4,17 @@
     import { AnotherSimpleComponent } from '@oat-sa/oat-sa-common-components';
     import _ from 'lodash';
     import { onMount, tick } from 'svelte';
+    import Widget from './Widget.svelte';
 
     export let name;
-
     let element;
-    let anotherElement;
 
-    onMount(() =>  {
+    onMount(() => {
         new SimpleComponent({ target: element });
-        new AnotherSimpleComponent({ target: element, props: {param: 'my prop value'}})  // dynamic import not needed. We can use a normal import
+        // new AnotherSimpleComponent({ target: anotherElement, props: { param: 'my prop value' } }); // commented as example to pass props, but we're using Widtet.svelte instead
     });
 
-    let CompiledComponent;
-    // onMount(() =>  (CompiledComponent = SimpleComponent)); // <svelte:component this={CompiledComponent} /> doesn't work. see https://github.com/sveltejs/svelte/issues/6584#issuecomment-1019578529
-
-    // dynamic import not needed. We can use a normal import
-    // onMount(async () => {
-    //     const { SimpleComponent } = await import('@oat-sa/oat-sa-common-components');
-    //     new SimpleComponent({ target: element }, {});
-    // });
-
-    tick().then(async() => {
+    tick().then(async () => {
         publicApiFunction();
         _.pick({ a: 1, b: 2 }, 'a');
     });
@@ -48,8 +38,5 @@
     <p>$countStore: {$countStore}</p>
     <button on:click={incrementCount}>Increment count</button>
     <div bind:this={element} />
-    <div bind:this={anotherElement} />
-    <!-- this below doesn't work -->
-    <svelte:component this={CompiledComponent} />
-    
+    <Widget this={AnotherSimpleComponent} param={'hello'} />
 </section>
