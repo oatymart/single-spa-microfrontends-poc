@@ -93,3 +93,15 @@ npx create-single-spa
 
 Choose application type, packages/mfe* folder, npm, org name `oat-sa`.
 Delete husky stuff as it is broken.
+
+## Production build
+
+In the root:
+
+```sh
+docker-compose up -d --build
+```
+
+The [Dockerfile](./docker/Dockerfile) uses 4 parallel stages to install and build all of the micro-frontends (apart from mfe3), and a 5th stage to copy the build outputs and serve them using nginx.
+
+TODO: the production importmap needs to be generated dynamically

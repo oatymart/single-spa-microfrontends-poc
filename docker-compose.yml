@@ -1,0 +1,9 @@
+services:
+  mfe_poc_app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    environment:
+      - ENV_VAR1=value1
+    ports:
+      - "8090:8090"

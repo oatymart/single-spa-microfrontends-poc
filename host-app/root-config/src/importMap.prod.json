@@ -4,5 +4,15 @@
     "module"
   ],
   "imports": {
+    "@oat-sa/root-config": "/root-config/index-CHlBnv5Z.js",
+    "@oat-sa/common": "/common/oat-sa-common.js",
+    "@oat-sa/common-auth": "/common/oat-sa-common-auth.js",
+    "@oat-sa/oat-sa-common-components": "/common/oat-sa-common-components.js",
+    "SimpleComponent": "/common/SimpleComponent.js",
+    "@oat-sa/common-login": "/common/oat-sa-common-login.js",
+    "@oat-sa/common-menu": "/common/oat-sa-common-menu.js",
+    "@oat-sa/mfe1": "/mfe1/oat-sa-mfe1.js",
+    "@oat-sa/mfe2": "/mfe2/oat-sa-mfe2.js",
+    "@oat-sa/mfe3": "//localhost:9004/oat-sa-mfe3.js"
   }
 }

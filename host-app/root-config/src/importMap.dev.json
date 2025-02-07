@@ -5,5 +5,15 @@
     "module"
   ],
   "imports": {
+    "@oat-sa/root-config": "//localhost:9000/src/oat-sa-root-config.js",
+    "@oat-sa/common": "//localhost:9003/oat-sa-common.js",
+    "@oat-sa/common-auth": "//localhost:9003/oat-sa-common-auth.js",
+    "@oat-sa/oat-sa-common-components": "//localhost:9003/oat-sa-common-components.js",
+    "SimpleComponent": "//localhost:9003/SimpleComponent.js",
+    "@oat-sa/common-login": "//localhost:9003/oat-sa-common-login.js",
+    "@oat-sa/common-menu": "//localhost:9003/oat-sa-common-menu.js",
+    "@oat-sa/mfe1": "//localhost:9001/oat-sa-mfe1.js",
+    "@oat-sa/mfe2": "//localhost:9002/oat-sa-mfe2.js",
+    "@oat-sa/mfe3": "//localhost:9004/oat-sa-mfe3.js"
   }
 }
