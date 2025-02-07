@@ -28,7 +28,8 @@ export default defineConfig({
                 build: ['src/importMap.prod.json', 'src/importMap.shared.json'], // for vite build
             },
             imo: '5.1.1', // from jsdelivr
-            imoUi: 'full'
+            imoUi: 'full',
+            localStorageKey: 'imo-ui', // run localStorage.setItem('imo-ui', true); in browser console to enable the overlay
         })
         // externalize({ externals: externalDependencies })
     ]
