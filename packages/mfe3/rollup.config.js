@@ -4,7 +4,6 @@ import commonjs from "@rollup/plugin-commonjs";
 import serve from "rollup-plugin-serve";
 import livereload from "rollup-plugin-livereload";
 import terser from "@rollup/plugin-terser";
-import { visualizer } from '../../host-app/common/node_modules/rollup-plugin-visualizer/dist/plugin/index.js';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -51,13 +50,7 @@ export default {
 
         // If we're building for production (npm run build
         // instead of npm run dev), minify
-        production && terser(),
-
-        // visualizer({
-        //     open: true,
-        //     gzipSize: true,
-        //     filename: 'stats.html'
-        // })
+        production && terser()
     ],
     watch: {
         clearScreen: false,

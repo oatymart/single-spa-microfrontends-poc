@@ -10,6 +10,9 @@
     "format": "prettier --write --plugin-search-dir=. .",
     "check-format": "prettier --plugin-search-dir=. --check ."
   },
+  "engines":{
+    "node": ">=22.0.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.23.3",
     "@babel/preset-env": "^7.23.3",

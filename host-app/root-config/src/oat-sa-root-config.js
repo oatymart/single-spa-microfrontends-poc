@@ -12,8 +12,7 @@ console.log('config', config);
 const layoutData = {
     props: {
         config: config || {}
-    },
-    // loaders: {}
+    }
 };
 
 const routes = constructRoutes(

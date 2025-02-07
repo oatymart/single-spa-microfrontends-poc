@@ -1,6 +1,5 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import vitePluginSingleSpa from 'vite-plugin-single-spa';
-// import externalize from 'vite-plugin-externalize-dependencies';
 
 const externalDependencies = [
     "single-spa",
@@ -9,27 +8,31 @@ const externalDependencies = [
 ];
 
 // https://vitejs.dev/config/
-export default defineConfig({
-    build: {
-        rollupOptions: {
-            input: "src/oat-sa-root-config.js",
-            output: {
-                format: "esm",
-            },
-            external: externalDependencies
+export default defineConfig(({ mode }) => {
+    const env = loadEnv(mode, process.cwd(), '');
+    return {
+        define: {
+            MODULES: env.MODULES
         },
-        assetsInclude: "src/*.html"
-    },
-    plugins: [
-        vitePluginSingleSpa({
-            type: 'root',
-            importMaps: {
-                dev: ['src/importMap.dev.json', 'src/importMap.shared.json'], // for vite dev
-                build: ['src/importMap.prod.json', 'src/importMap.shared.json'], // for vite build
+        build: {
+            target: 'esnext',
+            rollupOptions: {
+                external: externalDependencies
             },
-            imo: '5.1.1', // from jsdelivr
-            imoUi: 'full'
-        })
-        // externalize({ externals: externalDependencies })
-    ]
+            assetsInclude: "src/*.html",
+            assetsDir: '.'
+        },
+        plugins: [
+            vitePluginSingleSpa({
+                type: 'root',
+                importMaps: {
+                    dev: ['src/importMap.shared.json', 'src/importMap.dev.json'], // for vite dev
+                    build: ['src/importMap.shared.json', 'src/importMap.prod.json'], // for vite build (via docker)
+                },
+                imo: '5.1.1', // from jsdelivr
+                imoUi: 'full',
+                localStorageKey: 'imo-ui', // run localStorage.setItem('imo-ui', true); in browser console to enable the overlay
+            })
+        ]
+    };
 });

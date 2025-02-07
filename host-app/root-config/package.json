@@ -4,12 +4,16 @@
   "scripts": {
     "dev": "vite --port 9000",
     "build": "vite build",
+    "preview": "vite preview",
     "lint": "eslint src --ext js",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
     "not-used-webpack-dev": "webpack serve --port 9000 --env isLocal",
     "not-used-webpack-build": "concurrently npm:not-used-build:*",
     "not-used-build:webpack": "webpack --mode=production"
+  },
+  "engines":{
+    "node": ">=22.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.3",
@@ -46,5 +50,8 @@
     "dotenv": "^16.4.7",
     "single-spa": "^5.9.3",
     "single-spa-layout": "^1.6.0"
+  },
+  "optionalDependencies": {
+      "@rollup/rollup-linux-arm64-musl": "*"
   }
 }
